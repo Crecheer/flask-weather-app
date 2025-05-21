@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+    <head>
+        <title>{{ title }}</title>
+        <style>
+			body {
+				background-color: #1e1e2e
+				
+			}
+
+
+            table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+			width: auto;
+            }
+
+            td, th {
+            border: 0px solid #f9e2af;
+            text-align: left;
+            padding: 8px;
+			color: #cdd6f4;
+            }
+
+            tr:nth-child(even) {
+			background-color: #585b70;
+            }
+
+			#icon {
+				width: 50;
+				height: 50px;
+			}
+
+            #weather {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+				size: 10px;
+            }
+			
+			.forecast {
+				display: table-cell;
+				vertical-align: middle;
+			}
+
+			
+input[type="date"] {
+    width: 100%;
+    padding: var(--padding);
+    border: 1px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background-color: var(--primary-color);
+    padding: 5px;
+    border-radius: var(--border-radius);
+}
+			
+			
+        </style>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    </head>
+	{% block javascript %}
+	<script>
+		const single_day = "{{single_day}}"
+		const start = setTimeout(function() {
+			var input = document.querySelector('input[type="date"]');
+			console.log( "{{single_day}}" )
+			// input.value = new Date();
+			input.min = today()
+			input.max = get_max_date()
+		}, 1)
+		function date_change() {
+			const newVar = document.querySelector('input[type="date"]').value
+			var url = new URL(window.location)
+			url.searchParams.set("day", newVar)
+			window.location.replace(url.href)
+		}
+		function get_max_date() {
+			var max = new Date();
+			max.setDate(max.getDate() + 5);
+			max = max.toJSON().slice(0,10);
+			console.log("Max: " + max);
+			return max
+		}
+		function today() {
+			today = new Date().toJSON().slice(0,10);
+			console.log("Min: " + today);
+			return new Date().toJSON().slice(0,10);
+			
+		}
+	</script>
+	{% endblock %}
+    <body>
+		<center>
+		<div class="forecast">
+		<table>
+            <tr>
+                <th>Time</th>
+                <th>Temperature</th>
+                <th>Humidity</th>
+                <th>Weather</th>
+                <th>Wind</th>
+            </tr>
+			{% if single_day == True %}
+				{% for item in data %}
+					<tr>
+						<td>{{ item["dt_txt"] }}</td>
+						<td>{{ item["main"]["temp"] }}°C</td>
+						<td>{{ item["main"]["humidity"] }}%</td>
+						<td><div id="weather"><img id="icon" src="/static/icons/{{ item["weather"][0]["icon"] }}.png"></img> {{ item["weather"][0]["main"] }}</div></td>
+						<td>{{ '%.2f' % (item["wind"]["speed"]*3.6) }} km/h ({{ item["wind"]["deg"] }} deg)</td>
+					</tr>
+				{% endfor %}
+			{% else %}
+				{% for item in data["list"] %}
+					<tr>
+						<td>{{ item["dt_txt"] }}</td>
+						<td>{{ item["main"]["temp"] }}°C</td>
+						<td>{{ item["main"]["humidity"] }}%</td>
+						<td><div id="weather"><img src="/static/icons/{{ item["weather"][0]["icon"] }}.png"></img> {{ item["weather"][0]["main"] }}</div></td>
+						<td>{{ '%.2f' % (item["wind"]["speed"]*3.6) }} km/h ({{ item["wind"]["deg"] }} deg)</td>
+					</tr>
+				{% endfor %}
+			{% endif %}
+			
+		
+        </table>
+		<input type="date" id="date", onchange="date_change()", min="today()", max="get_max_date()"></input>
+		</div>
+
+		</center>
+    </body>
+
+</html>
