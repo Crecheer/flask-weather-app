@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return "<h1>Go to ./forecast?city=(city)</h1>"
+    return render_template("homepage.html", title="Weather App")
 
 @app.route("/forecast", methods=["GET"])
 def get_weather():

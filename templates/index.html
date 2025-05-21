@@ -71,6 +71,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 			// input.value = new Date();
 			input.min = today()
 			input.max = get_max_date()
+			var header = document.getElementById("header")
+			header.innerHTML = "Forecast for " + new URL(window.location).searchParams.get("city")
+			console.debug(header)
 		}, 1)
 		function date_change() {
 			const newVar = document.querySelector('input[type="date"]').value
@@ -94,7 +97,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	</script>
 	{% endblock %}
     <body>
+		<button onclick="window.location.href = '/';">Back</button>
 		<center>
+		<h1 id="header" style="color: #cdd6f4"></h1>
 		<div class="forecast">
 		<table>
             <tr>
