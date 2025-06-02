@@ -35,7 +35,10 @@ def get_weather():
     resp = Response(data)
     resp.status_code = 200
     print(full_url)
-    data = urllib.request.urlopen(full_url)
+    try:
+        data = urllib.request.urlopen(full_url)
+    except:
+        return render_template("404.html", title="Weather App")
     data_json = json.loads(data.read())
     
     filtered = []
@@ -51,3 +54,7 @@ def get_weather():
         return filtered
     else:
         return render_template("index.html", title="Weather App", data=filtered, single_day = single_day)
+    
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("404.html", title="Weather App")

@@ -4,11 +4,11 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script>
         function city_change() {
-			const newVar = document.querySelector('input[type="text"]').value
+			var newVar = document.querySelector('input[type="text"]').value
             var url = new URL(window.location + "/forecast")
             url.searchParams.set("city", newVar)
             url.searchParams.set("day", new Date().toJSON().slice(0,10))
-            window.location.replace(url.href)
+            window.location.href = url.href;
         }
         
         const start = setInterval(function () {

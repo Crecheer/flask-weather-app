@@ -3,26 +3,32 @@
         <title>{{ title }}</title>
         <style>
 			body {
-				background-color: #1e1e2e
+				background-color: #1e1e2e;
+				--text: #cdd6f4;
 				
 			}
 
 
             table {
             font-family: arial, sans-serif;
-            border-collapse: collapse;
 			width: auto;
+			border-radius: 10px;
+			border: 1px solid #cdd6f4;
             }
 
+			#table {
+
+				border-radius: 10px;
+			}
+
             td, th {
-            border: 0px solid #f9e2af;
             text-align: left;
             padding: 8px;
 			color: #cdd6f4;
             }
 
             tr:nth-child(even) {
-			background-color: #585b70;
+				background-color: #45475a;
             }
 
 			#icon {
@@ -42,25 +48,49 @@
 				vertical-align: middle;
 			}
 
-			
-input[type="date"] {
-    width: 100%;
-    padding: var(--padding);
-    border: 1px solid var(--primary-color);
-    border-radius: var(--border-radius);
-    font-size: 16px;
-    box-sizing: border-box;
-}
+			#header {
+				font-family: arial, sans-serif;
+				text-transform: capitalize;
+			}
 
-input[type="date"]::-webkit-calendar-picker-indicator {
-    background-color: var(--primary-color);
-    padding: 5px;
-    border-radius: var(--border-radius);
-}
+			
+			input[type="date"] {
+				width: 100%;
+				padding: 10px 10px;
+				border: 1px solid #b4befe;
+				border-radius: 100px;
+				font-size: 16px;
+				box-sizing: border-box;
+				background-color: #313244;
+				margin-top: 50px;
+				color: #cdd6f4;
+				display: inline;
+			}
+			
+			
+			
+			::-webkit-datetime-edit-text { visibility:hidden;}
+			::-webkit-datetime-edit-month-field { color: var(--text); }
+			::-webkit-datetime-edit-day-field { color: var(--text); }
+			::-webkit-datetime-edit-year-field { display: none; }
+			::-webkit-calendar-picker-indicator { color: var(--text); }
+			
+			#back {
+				color: #11111b;
+				background-image: linear-gradient(to bottom right, #fab387, #f9e2af);
+				width: 100px;
+				height: 30px;
+				border-radius: 5px;
+				border: none; 
+			}
 			
 			
         </style>
-		<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+		<script
+			  src="https://code.jquery.com/jquery-3.7.1.js"
+			  integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+			  crossorigin="anonymous">
+		</script>
     </head>
 	{% block javascript %}
 	<script>
@@ -97,11 +127,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	</script>
 	{% endblock %}
     <body>
-		<button onclick="window.location.href = '/';">Back</button>
+		<button onclick="window.location.href = '/';" id="back">Back</button>
 		<center>
 		<h1 id="header" style="color: #cdd6f4"></h1>
 		<div class="forecast">
-		<table>
+		<div id="table">
+		<table cellspacing="0">
             <tr>
                 <th>Time</th>
                 <th>Temperature</th>
@@ -133,7 +164,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 			
 		
         </table>
-		<input type="date" id="date", onchange="date_change()", min="today()", max="get_max_date()"></input>
+		</div>
+		<input type="date" class="date", onchange="date_change()", min="today()", max="get_max_date()" value="today()" ></input>
 		</div>
 
 		</center>
