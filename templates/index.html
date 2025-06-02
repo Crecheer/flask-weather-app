@@ -147,7 +147,7 @@
 						<td>{{ item["main"]["temp"] }}°C</td>
 						<td>{{ item["main"]["humidity"] }}%</td>
 						<td><div id="weather"><img id="icon" src="/static/icons/{{ item["weather"][0]["icon"] }}.png"></img> {{ item["weather"][0]["main"] }}</div></td>
-						<td>{{ '%.2f' % (item["wind"]["speed"]*3.6) }} km/h ({{ item["wind"]["deg"] }} deg)</td>
+						<td>{{ "%.2f" % (item["wind"]["speed"]*3.6) }} km/h ({{ item["wind"]["deg"] }} deg)</td>
 					</tr>
 				{% endfor %}
 			{% else %}
@@ -157,7 +157,7 @@
 						<td>{{ item["main"]["temp"] }}°C</td>
 						<td>{{ item["main"]["humidity"] }}%</td>
 						<td><div id="weather"><img src="/static/icons/{{ item["weather"][0]["icon"] }}.png"></img> {{ item["weather"][0]["main"] }}</div></td>
-						<td>{{ '%.2f' % (item["wind"]["speed"]*3.6) }} km/h ({{ item["wind"]["deg"] }} deg)</td>
+						<td>{{ "%.2f" % (item["wind"]["speed"]*3.6) }} km/h ({{ item["wind"]["deg"] }} deg)</td>
 					</tr>
 				{% endfor %}
 			{% endif %}
